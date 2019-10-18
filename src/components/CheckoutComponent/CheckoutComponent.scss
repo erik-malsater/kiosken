@@ -1,0 +1,63 @@
+.checkoutContainer {
+  background-color: #E8712D;
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+
+  .centeredContainer {
+    padding: 2rem 3rem;
+    width: 100%;
+  }
+  
+  a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.75rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+  }
+  h1 {
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+  header {
+    display: flex;
+    align-items: center;
+    color: white;
+    width: 100%;
+  }
+
+  main {
+    display: flex;
+    margin-top: 2rem;
+  }
+
+  .customerInformationContainer {
+    margin-right: 0.5rem;
+    width: 25rem;
+    height: 100%;
+  }
+
+  .formContainer {
+    background-color: white;
+    padding: 2rem;
+  }
+
+  .phoneContainer {
+    margin-top: 0.5rem;
+  }
+
+  .cartContainer {
+    flex-grow: 1;
+  }
+
+  .keypadContainer {
+    background-color: pink;
+    width: 20rem;
+    height: 100%;
+  }
+}
