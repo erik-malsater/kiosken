@@ -1,5 +1,5 @@
 .checkoutContainer {
-  background-color: #E8712D;
+  background-color: #F76900;
   display: flex;
   justify-content: space-between;
   height: 100vh;
@@ -43,7 +43,115 @@
   main {
     display: flex;
     padding: 0 3rem 2rem 3rem;
+
+    h2 {
+      font-weight: 300;
+      font-size: 1.75rem;
+      margin: 0;
+    }
+    p, label {
+      color: grey;
+      margin-top: 0.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 1rem;
+    }
+
+    input[type="text"] {
+      font-size: 2rem;
+      //border: solid 1px dimgrey;
+      border: none;
+      overflow: hidden;
+      width: 130px;
+      white-space: nowrap;
+      //width: 12rem;
+      //background: repeating-linear-gradient(90deg, #ffffff 0px, #ffffff 19px, #000000 20px);
+      //color: dimgrey;
+      font-family: monospace;
+      letter-spacing: 4px;
+      padding-left: 5px;
+    }
+
+    .editIcon {
+      height: 2rem;
+      width: 2rem;
+      margin-top: 0.5rem;
+    }
+
+    .sixNumberBorder {
+      height: 0.2rem;
+      border: solid 1px dimgrey;
+      border-top: none;
+      //overflow: hidden;
+      width: 119px;
+    //white-space: nowrap;
+      //width: 12rem;
+      //background: repeating-linear-gradient(90deg, #ffffff 0px, #ffffff 19px, #000000 20px);
+      color: dimgrey;
+      font-family: monospace;
+      //letter-spacing: 4.5px;
+      //padding-left: 0;
+      background: repeating-linear-gradient(90deg, #ffffff 0px, #ffffff 19px, #000000 20px);
+    }
+
+    .fourNumberBorder {
+      height: 0.2rem;
+      border: solid 1px dimgrey;
+      border-top: none;
+      //overflow: hidden;
+      width: 79px;
+    //white-space: nowrap;
+      //width: 12rem;
+      //background: repeating-linear-gradient(90deg, #ffffff 0px, #ffffff 19px, #000000 20px);
+      color: dimgrey;
+      font-family: monospace;
+      //letter-spacing: 4.5px;
+      //padding-left: 0;
+      background: repeating-linear-gradient(90deg, #ffffff 0px, #ffffff 19px, #000000 20px);
+    }
+
+    .identityNumberBorderRow {
+      display: flex;
+      justify-content: space-between;
+      width: 245px;
+    }
+    
+    input:focus {
+      outline: none;
+    }
+
+    .inputRow {
+      display: flex;
+
+      p {
+        margin-top: 1rem;
+        margin-right: 1rem;
+      }
+    }
   }
+
+  .addressContainer {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    box-sizing: border-box;
+    background-color: white;
+    height: 30rem;
+  }
+
+  #identityNumberContainer {
+    padding-top: 1rem;
+    padding-bottom: 1.75rem;
+  }
+
+  #identityNumberContainer:hover {
+    cursor: pointer;
+  }
+
+  
+
+
 
   .customerInformationContainer {
     margin-right: 0.5rem;
@@ -53,7 +161,8 @@
 
   .formContainer {
     background-color: white;
-    padding: 2rem;
+    padding-left: 2rem;
+    padding-right: 2rem;
   }
 
   .phoneContainer {
@@ -66,9 +175,14 @@
 
   footer {
     width: 100%;
-    background-color: red;
+    height: 15vh;
+    background-color: #C65500;
     margin-top: auto;
-    padding: 2rem 3rem;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 3rem;
+    //padding: 2rem 3rem;
   }
 
   .returnArrowIcon {
@@ -78,8 +192,78 @@
   }
 
   .keypadContainer {
-    background-color: pink;
+    background-color: #C65500;
     width: 20rem;
-    height: 100%;
+    height: 85vh;
+    padding: 15vh 2rem 0 2rem;
+    box-sizing: border-box;;
+
+    h3 {
+      margin: 0;
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 400;
+    }
+    p {
+      color: white;
+    }
+
+    .keypad {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+
+      button {
+        border: none;
+        color: white;
+        height: 5rem;
+        width: 5rem;
+        margin-bottom: 0.5rem;
+        font-size: 2.25rem;
+        background-color: #8A3B00;
+        cursor: pointer;
+
+        .backspaceIcon {
+          height: 2.5rem;
+          width: 2.5rem;
+          margin-top: 0.5rem;
+        }
+
+        .checkmarkIcon {
+          height: 2.5rem;
+          width: 2.5rem;
+          margin-top: 0.5rem;
+        }
+      }
+    }
+  }
+
+  .orderContainer {
+    width: 20rem;
+    height: 15vh;
+    background-color: #703000;
+    display: flex;
+    align-items: center;
+    padding: 0 3rem;
+    box-sizing: border-box;
+  }
+
+  .orderLink {
+    display: flex;
+    justify-content: space-between;
+    flex-grow: 1;
+  }
+
+  .focused {
+    position: absolute;
+    padding-left: 3rem;
+
+    margin-left: -1rem;
+    width: 22rem;
+    box-shadow: 0px 0px 17px -1px rgba(133,133,133,1);
+  }
+
+  .hiddenIcon {
+    display: none;
   }
 }
