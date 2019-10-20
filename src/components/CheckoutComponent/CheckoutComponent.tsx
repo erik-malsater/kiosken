@@ -39,7 +39,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
     let amount2 = this.state.productAmount2 * 139;
     let totalPrice = amount1 + amount2;
     if(this.state.delivery) {
-      totalPrice += 70;
+      totalPrice += 79;
     }
     let tax = Math.round(totalPrice * 0.25);
     this.setState({
@@ -106,7 +106,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
           identityNumberFirstSix: newValue
         })
       }
-    } else if (this.state.focusedInput === "phoneForm") {
+    } else if (this.state.focusedInput === "phoneForm" && this.state.phone.length < 10) {
       let currentValue = this.state.phone;
       let newValue = currentValue + value;
       this.setState({
@@ -214,7 +214,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
       <div className="checkoutContainer">
         <div className="centeredContainer">
           <header>
-            <a href=""><img className="backArrowIcon" src={require("../../images/back-arrow-icon.png")} />Tillbehör</a>
+            <a href="back"><img className="backArrowIcon" src={require("../../images/back-arrow-icon.png")} alt="Tillbakapil" />Tillbehör</a>
             <h1>Kassa</h1>
           </header>
           <main>
@@ -343,9 +343,9 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
 
           </main>
           <footer>
-            <a href=""><img className="returnArrowIcon" src={require("../../images/return-arrow-icon.png")} alt=""/>Fortsätt handla</a>
+            <a href="return"><img className="returnArrowIcon" src={require("../../images/return-arrow-icon.png")} alt=""/>Fortsätt handla</a>
             <div className="orderContainer">
-              <a className="orderLink" href="">BESTÄLL <img src={require("../../images/forward-arrow-icon.png")} alt=""/></a>
+              <a className="orderLink" href="order">BESTÄLL <img src={require("../../images/forward-arrow-icon.png")} alt=""/></a>
             </div>
           </footer>
         </div>
@@ -366,9 +366,9 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                 <button onClick={() => this.handleKeypad("7")}>7</button>
                 <button onClick={() => this.handleKeypad("8")}>8</button>
                 <button onClick={() => this.handleKeypad("9")}>9</button>
-                <button><img className="backspaceIcon" src={require("../../images/backspace-icon.png")} alt="Backspace icon" onClick={this.handleBackspace}/></button>
+                <button onClick={this.handleBackspace}><img className="backspaceIcon" src={require("../../images/backspace-icon.png")} alt="Backspace icon"/></button>
                 <button onClick={() => this.handleKeypad("0")}>0</button>
-                <button><img className="checkmarkIcon" src={require("../../images/checkmark-icon.png")} alt="Checkmark icon" onClick={this.handleDone}/></button>
+                <button onClick={this.handleDone}><img className="checkmarkIcon" src={require("../../images/checkmark-icon.png")} alt="Checkmark icon"/></button>
               </div>
           </div>
         </aside>
