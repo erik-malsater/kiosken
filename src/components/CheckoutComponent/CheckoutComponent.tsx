@@ -6,7 +6,9 @@ interface ICheckoutState {
   identityNumberFirstSix: string,
   identityNumberLastFour: string,
   phone: string,
-  focusedInput: string
+  focusedInput: string,
+  productAmount1: number,
+  productAmount2: number
 }
 
 class CheckoutComponent extends React.Component<{}, ICheckoutState> {
@@ -16,7 +18,9 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
       identityNumberFirstSix: "",
       identityNumberLastFour: "",
       phone: "",
-      focusedInput: ""
+      focusedInput: "",
+      productAmount1: 1,
+      productAmount2: 1
     }
   }
 
@@ -138,6 +142,40 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
     })
   }
 
+  handleIncrease = (product: string) => {
+    if(product === "product1") {
+      let currentValue = this.state.productAmount1;
+      let newValue = currentValue + 1;
+      this.setState({
+        productAmount1: newValue
+      })
+    }
+    if(product === "product2") {
+      let currentValue = this.state.productAmount2;
+      let newValue = currentValue + 1;
+      this.setState({
+        productAmount2: newValue
+      })
+    }
+  }
+
+  handleDecrease = (product: string) => {
+    if(product === "product1" && this.state.productAmount1 !== 0) {
+      let currentValue = this.state.productAmount1;
+      let newValue = currentValue - 1;
+      this.setState({
+        productAmount1: newValue
+      })
+    }
+    if(product === "product2" && this.state.productAmount2 !== 0) {
+      let currentValue = this.state.productAmount2;
+      let newValue = currentValue - 1;
+      this.setState({
+        productAmount2: newValue
+      })
+    }
+  }
+
   render() {
     return(
       <div className="checkoutContainer">
@@ -193,7 +231,70 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
            </div>
 
            <div className="cartContainer formContainer">
-              Produkter
+              <div className="productContainerRow">
+                <div className="productColumns">
+                  <div className="itemImageFrame">
+                    <img className="itemImage" src={require("../../images/saw.jpg")} alt=""/>
+                  </div>
+                  <div>
+                    <h3>Bosch</h3>
+                    <p className="modelName">PST 700 E</p>
+                  </div>
+                </div>
+                <div className="productAmountContainer">
+                  <button className="operatorButton" onClick={() => this.handleIncrease("product1")}><img className="operatorIcon" src={require("../../images/plus-icon.png")} alt="Plus icon"/></button>
+                  <p>{this.state.productAmount1}st</p>
+                  <button className="operatorButton" onClick={() => this.handleDecrease("product1")}><img className="operatorIcon" src={require("../../images/minus-icon.png")} alt="Minus icon"/></button>
+                </div>
+                <p>599 kr</p>
+              </div>
+              <div className="productContainerRow">
+                <div className="productColumns">
+                  <div className="itemImageFrame">
+                    <img className="itemImage" src={require("../../images/sawblades.jpg")} alt=""/>
+                  </div>
+                  <div>
+                    <h3>Bosch</h3>
+                    <p className="modelName">10-delars sticksågblad</p>
+                  </div>
+                </div>
+                <div className="productAmountContainer">
+                  <button className="operatorButton" onClick={() => this.handleIncrease("product2")}><img className="operatorIcon" src={require("../../images/plus-icon.png")} alt="Plus icon"/></button>
+                  <p>{this.state.productAmount2}st</p>
+                  <button className="operatorButton" onClick={() => this.handleDecrease("product2")}><img className="operatorIcon" src={require("../../images/minus-icon.png")} alt="Minus icon"/></button>
+                </div>
+                <p>599 kr</p>
+              </div>
+              <div className="cartBottomContainer">
+                <div className="productContainerRow">
+                  <div className="productColumns">
+                    <div className="itemImageFrame">
+                      <img className="itemImage" src={require("../../images/delivery-icon.png")} alt="Delivery icon"/>
+                    </div>
+                    <label className="checkboxContainer">
+                      <input type="checkbox"/>
+                      <span className="checkmark"></span>
+                      <p>Hemleverans</p>
+                    </label>
+                    
+                  </div>
+                  <p>79 kr</p>
+                </div>
+                <div className="productContainerRow">
+                  <div className="productColumns">
+                    <div className="itemImageFrame">
+                      <img className="itemImage" src={require("../../images/shop-icon.png")} alt="Delivery icon"/>
+                    </div>
+                    <label className="checkboxContainer">
+                      <input type="checkbox"/>
+                      <span className="checkmark"></span>
+                      <p>Hämta i butik</p>
+                    </label>
+                    
+                  </div>
+                </div>
+              </div>
+              
            </div>
 
           </main>
