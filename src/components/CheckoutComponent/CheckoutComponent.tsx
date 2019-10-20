@@ -5,6 +5,7 @@ import $ from 'jquery';
 interface ICheckoutState {
   identityNumberFirstSix: string,
   identityNumberLastFour: string,
+  phone: string,
   focusedInput: string
 }
 
@@ -14,6 +15,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
     this.state = {
       identityNumberFirstSix: "",
       identityNumberLastFour: "",
+      phone: "",
       focusedInput: ""
     }
   }
@@ -30,11 +32,16 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
     }
   }
 
+  handlePhoneInputChange = (e: any) => {
+    const value = e.target.value;
+    this.setState({
+      phone: value
+    });
+  }
+
   handleBackspace = () => {
     if(this.state.focusedInput === "identityForm") {
-      
       if(this.state.identityNumberLastFour.length > 0) {
-        console.log("lalala");
         let currentValue = this.state.identityNumberLastFour;
         let newValue = currentValue.slice(0, -1);
         this.setState({
@@ -43,11 +50,16 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
       } else {
         let currentValue = this.state.identityNumberFirstSix;
         let newValue = currentValue.slice(0, -1);
-        console.log("taaar bort");
         this.setState({
           identityNumberFirstSix: newValue
         })
       }
+    } else if (this.state.focusedInput === "phoneForm") {
+        let currentValue = this.state.phone;
+        let newValue = currentValue.slice(0, -1);
+        this.setState({
+          phone: newValue
+        })
     }
   }
 
@@ -66,10 +78,18 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
           identityNumberFirstSix: newValue
         })
       }
+    } else if (this.state.focusedInput === "phoneForm") {
+      let currentValue = this.state.phone;
+      let newValue = currentValue + value;
+      this.setState({
+        phone: newValue
+      })
     }
   }
 
   focusIdentityForm = (e: any) => {
+    $("#phoneInputContainer").removeClass("focused");
+    $("#phoneInputContainer .editIcon").removeClass("hiddenIcon");
     if(this.state.focusedInput === "identityForm") {
       this.setState({
         focusedInput: ""
@@ -86,12 +106,37 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
     } else {
       $("#identityNumberFirstSix").focus();
     }
-    
   }
-/*
-  focusIdentityFormSection = () => {
-    $("#identityNumberFirstSix").focus();
-  }*/
+
+  focusPhoneForm = () => {
+    $("#identityNumberContainer").removeClass("focused");
+    $("#identityNumberContainer .editIcon").removeClass("hiddenIcon");
+    if(this.state.focusedInput === "phoneForm") {
+      this.setState({
+        focusedInput: ""
+      })
+    } else {
+      this.setState({
+        focusedInput: "phoneForm"
+      })
+    }
+    $("#phoneInputContainer").toggleClass("focused");
+    $("#phoneInputContainer .editIcon").toggleClass("hiddenIcon");
+    $("#phone").focus();
+  }
+
+  handleDone = () => {
+    if(this.state.focusedInput === "identityForm") {
+      $("#identityNumberContainer").removeClass("focused");
+      $("#identityNumberContainer .editIcon").removeClass("hiddenIcon");
+    } else if (this.state.focusedInput === "phoneForm") {
+      $("#phoneInputContainer").removeClass("focused");
+      $("#phoneInputContainer .editIcon").removeClass("hiddenIcon");
+    }
+    this.setState({
+      focusedInput: ""
+    })
+  }
 
   render() {
     return(
@@ -110,22 +155,40 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                 <p>Hämta dina adressuppgifter genom att fylla i ditt personnummer</p>
               </div>
               <div id="identityNumberContainer" className="formContainer" onClick={this.focusIdentityForm}>
-                <label htmlFor="identityNumber">Personnummer:</label>
+                <p>Personnummer:</p>
                 <div className="inputRow">
-                  <input type="text" id="identityNumberFirstSix" className="identityInput" name="identityNumberFirstSix" value={this.state.identityNumberFirstSix} onChange={this.handleIdentityInputChange} maxLength={6}/>
+                  <input type="text" id="identityNumberFirstSix" className="identityInput" name="identityNumberFirstSix" aria-label="Första sex siffrorna i ditt personnummer" value={this.state.identityNumberFirstSix} onChange={this.handleIdentityInputChange} maxLength={6}/>
                   <p>–</p>
-                  <input type="text" id="identityNumberLastFour" className="identityInput" name="identityNumberLastFour" value={this.state.identityNumberLastFour} onChange={this.handleIdentityInputChange} maxLength={4}/>
+                  <input type="text" id="identityNumberLastFour" className="identityInput" name="identityNumberLastFour" aria-label="Sista fyra siffrorna i ditt personnummer" value={this.state.identityNumberLastFour} onChange={this.handleIdentityInputChange} maxLength={4}/>
                   <img className="editIcon" src={require("../../images/edit-icon.png")} alt=""/>
                 </div>
                 <div className="identityNumberBorderRow">
                   <div className="sixNumberBorder"></div>
                   <div className="fourNumberBorder"></div>
                 </div>
-                
+              </div>
+              <div className="formContainer fetchedCustomerContainer">
+                <h3>Bo Göran</h3>
+                <p>Rävgatan 1b</p>
+                <p>123 45 Boliden</p>
               </div>
             </div>
-            <div className="phoneContainer formContainer">
-              Fyll i telefonnummer
+            <div className="phoneContainer">
+              <div className="formContainer">
+                <h2>Kontaktuppgifter</h2>
+                <p>Fyll i ditt telefonnummer för att få ett SMS när din order är redo.</p>
+              </div>
+              <div id="phoneInputContainer" className="formContainer" onClick={this.focusPhoneForm}>
+                <p>Mobilnummer:</p>
+                <div className="inputRow">
+                  <input type="text" id="phone" name="phoneNoAutocomplete" aria-label="Mobilnummer" value={this.state.phone} onChange={this.handlePhoneInputChange} maxLength={10}/>
+                  <img className="editIcon" src={require("../../images/edit-icon.png")} alt=""/>
+                </div>
+                <div className="identityNumberBorderRow">
+                  <div className="phoneNumberBorder"></div>
+                </div>
+                
+              </div>
             </div>
            </div>
 
@@ -133,12 +196,13 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
               Produkter
            </div>
 
-           
-
           </main>
           <footer>
-             <a href=""><img className="returnArrowIcon" src={require("../../images/return-arrow-icon.png")} alt=""/>Fortsätt handla</a>
-           </footer>
+            <a href=""><img className="returnArrowIcon" src={require("../../images/return-arrow-icon.png")} alt=""/>Fortsätt handla</a>
+            <div className="orderContainer">
+              <a className="orderLink" href="">BESTÄLL <img src={require("../../images/forward-arrow-icon.png")} alt=""/></a>
+            </div>
+          </footer>
         </div>
         
         <aside>
@@ -159,11 +223,8 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                 <button onClick={() => this.handleKeypad("9")}>9</button>
                 <button><img className="backspaceIcon" src={require("../../images/backspace-icon.png")} alt="Backspace icon" onClick={this.handleBackspace}/></button>
                 <button onClick={() => this.handleKeypad("0")}>0</button>
-                <button><img className="checkmarkIcon" src={require("../../images/checkmark-icon.png")} alt="Checkmark icon"/></button>
+                <button><img className="checkmarkIcon" src={require("../../images/checkmark-icon.png")} alt="Checkmark icon" onClick={this.handleDone}/></button>
               </div>
-          </div>
-          <div className="orderContainer">
-            <a className="orderLink" href="">BESTÄLL <img src={require("../../images/forward-arrow-icon.png")} alt=""/></a>
           </div>
         </aside>
       </div>
