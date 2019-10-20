@@ -24,6 +24,10 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
     }
   }
 
+  componentDidMount = () => {
+    
+  }
+
   handleIdentityInputChange = (e: any) => {
     const target = e.target;
     const value = target.value;
@@ -246,7 +250,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                   <p>{this.state.productAmount1}st</p>
                   <button className="operatorButton" onClick={() => this.handleDecrease("product1")}><img className="operatorIcon" src={require("../../images/minus-icon.png")} alt="Minus icon"/></button>
                 </div>
-                <p>599 kr</p>
+                <p className="priceColumn">599 kr</p>
               </div>
               <div className="productContainerRow">
                 <div className="productColumns">
@@ -263,7 +267,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                   <p>{this.state.productAmount2}st</p>
                   <button className="operatorButton" onClick={() => this.handleDecrease("product2")}><img className="operatorIcon" src={require("../../images/minus-icon.png")} alt="Minus icon"/></button>
                 </div>
-                <p>599 kr</p>
+                <p className="priceColumn">139 kr</p>
               </div>
               <div className="cartBottomContainer">
                 <div className="productContainerRow">
@@ -278,7 +282,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                     </label>
                     
                   </div>
-                  <p>79 kr</p>
+                  <p className="priceColumn">79 kr</p>
                 </div>
                 <div className="productContainerRow">
                   <div className="productColumns">
@@ -291,6 +295,17 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                       <p>Hämta i butik</p>
                     </label>
                     
+                  </div>
+                </div>
+
+                <div className="paymentContainer">
+                  <div className="paymentRow">
+                    <h2>Att betala:</h2>
+                    <h2>kr</h2>
+                  </div>
+                  <div className="paymentRow">
+                    <p>Varav moms:</p>
+                    <p>kr</p>
                   </div>
                 </div>
               </div>

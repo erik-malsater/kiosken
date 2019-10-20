@@ -254,6 +254,11 @@
     cursor: pointer;
   }
 
+  .priceColumn {
+    width: 5.5rem;
+    text-align: right;
+  }
+
   .cartBottomContainer {
     border-top: 3px dotted lightgray;
     margin-top: auto;
@@ -314,6 +319,18 @@
       -webkit-transform: rotate(45deg);
       -ms-transform: rotate(45deg);
       transform: rotate(45deg);
+    }
+
+    .paymentRow {
+      display: flex;
+      justify-content: flex-end;
+      margin-left: auto;
+      //width: 20rem;
+    }
+
+    .paymentRow :nth-child(2) {
+      width: 7rem;
+      text-align: right;
     }
 
   }
