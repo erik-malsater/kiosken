@@ -8,7 +8,10 @@ interface ICheckoutState {
   phone: string,
   focusedInput: string,
   productAmount1: number,
-  productAmount2: number
+  productAmount2: number,
+  totalPrice: number,
+  tax: number,
+  delivery: boolean
 }
 
 class CheckoutComponent extends React.Component<{}, ICheckoutState> {
@@ -19,13 +22,30 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
       identityNumberLastFour: "",
       phone: "",
       focusedInput: "",
-      productAmount1: 1,
-      productAmount2: 1
+      productAmount1: 0,
+      productAmount2: 0,
+      totalPrice: 0,
+      tax: 0,
+      delivery: true
     }
   }
 
   componentDidMount = () => {
-    
+    this.calculatePayment();
+  }
+
+  calculatePayment = () => {
+    let amount1 = this.state.productAmount1 * 599;
+    let amount2 = this.state.productAmount2 * 139;
+    let totalPrice = amount1 + amount2;
+    if(this.state.delivery) {
+      totalPrice += 70;
+    }
+    let tax = Math.round(totalPrice * 0.25);
+    this.setState({
+      totalPrice: totalPrice,
+      tax: tax
+    })
   }
 
   handleIdentityInputChange = (e: any) => {
@@ -152,14 +172,14 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
       let newValue = currentValue + 1;
       this.setState({
         productAmount1: newValue
-      })
+      }, () => {this.calculatePayment()})
     }
     if(product === "product2") {
       let currentValue = this.state.productAmount2;
       let newValue = currentValue + 1;
       this.setState({
         productAmount2: newValue
-      })
+      }, () => {this.calculatePayment()})
     }
   }
 
@@ -169,15 +189,24 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
       let newValue = currentValue - 1;
       this.setState({
         productAmount1: newValue
-      })
+      }, () => {this.calculatePayment()})
     }
     if(product === "product2" && this.state.productAmount2 !== 0) {
       let currentValue = this.state.productAmount2;
       let newValue = currentValue - 1;
       this.setState({
         productAmount2: newValue
-      })
+      }, () => {this.calculatePayment()})
     }
+  }
+
+  handleDeliveryChange = (e: any) => {
+    let value = e.target.value;
+    let isTrueSet = (value === "true")
+
+    this.setState({
+      delivery: isTrueSet
+    }, () => {this.calculatePayment()})
   }
 
   render() {
@@ -276,7 +305,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                       <img className="itemImage" src={require("../../images/delivery-icon.png")} alt="Delivery icon"/>
                     </div>
                     <label className="checkboxContainer">
-                      <input type="checkbox"/>
+                      <input type="checkbox" value="true" checked={this.state.delivery} onChange={this.handleDeliveryChange}/>
                       <span className="checkmark"></span>
                       <p>Hemleverans</p>
                     </label>
@@ -290,7 +319,7 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                       <img className="itemImage" src={require("../../images/shop-icon.png")} alt="Delivery icon"/>
                     </div>
                     <label className="checkboxContainer">
-                      <input type="checkbox"/>
+                      <input type="checkbox" value="false" checked={!this.state.delivery} onChange={this.handleDeliveryChange}/>
                       <span className="checkmark"></span>
                       <p>Hämta i butik</p>
                     </label>
@@ -301,11 +330,11 @@ class CheckoutComponent extends React.Component<{}, ICheckoutState> {
                 <div className="paymentContainer">
                   <div className="paymentRow">
                     <h2>Att betala:</h2>
-                    <h2>kr</h2>
+                    <h2>{this.state.totalPrice}kr</h2>
                   </div>
                   <div className="paymentRow">
                     <p>Varav moms:</p>
-                    <p>kr</p>
+                    <p>{this.state.tax}kr</p>
                   </div>
                 </div>
               </div>
